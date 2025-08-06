@@ -24,14 +24,12 @@ let counter = 1;
 app.post("/api/shorturl", (req, res) => {
   const url = req.body.url;
 
-  // Validar formato de URL
   try {
     const parsedUrl = new URL(url);
     if (!/^https?:/.test(parsedUrl.protocol)) {
       return res.json({ error: "invalid url" });
     }
 
-    // Verificar dominio con DNS
     dns.lookup(parsedUrl.hostname, (err) => {
       if (err) return res.json({ error: "invalid url" });
 
